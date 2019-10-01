@@ -1,0 +1,57 @@
+user nginx;
+worker_processes ##WORKER_PROCESSES##;
+
+error_log /dev/stdout info;
+pid /var/run/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  access_log /dev/stdout;
+
+  gzip on;
+  gzip_min_length 1k;
+  # gzip_buffer 4 16k;
+  gzip_comp_level 2;
+  gzip_types text/plain application/x-javascript text/css application/xml;
+
+  server {
+    listen ##PORT##;
+    server_name ##SERVER_NAME##;
+
+    charset utf-8;
+
+    client_max_body_size ##CLIENT_MAX_BODY_SIZE##;
+    proxy_read_timeout ##PROXY_READ_TIMEOUT##;
+
+    include /etc/nginx/conf.d/*.conf;
+
+    location / {
+      proxy_pass http://##PROXY_PASS_UPSTREAM##;
+      auth_basic "Restricted";
+      auth_basic_user_file /etc/nginx/.htpasswd;
+
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header Upgrade		$http_upgrade;
+      proxy_set_header Connection	"upgrade";
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
+      proxy_hide_header X-Powered-By;
+      
+      # Do not pass Authorization header to destination
+      proxy_set_header Authorization "";
+    }
+  }
+
+  server {
+    listen 8090;
+
+    location /nginx_status {
+      stub_status on;
+      access_log off;
+    }
+  }
+}
