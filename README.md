@@ -1,7 +1,9 @@
 # Docker image of Nginx with Basic Auth
 
-[![Docker Status](https://img.shields.io/docker/status/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
-[![Docker Build](https://img.shields.io/docker/automated/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
+[![Docker Stars](https://img.shields.io/docker/stars/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
+[![Docker Pulls](https://img.shields.io/docker/pulls/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
+[![Docker Automated](https://img.shields.io/docker/automated/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
+[![Docker Build](https://img.shields.io/docker/build/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
 
 Simple HTTP Proxy with Basic Authentication
 
