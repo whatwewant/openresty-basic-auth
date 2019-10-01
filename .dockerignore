@@ -2,3 +2,4 @@
 !Dockerfile
 !config/endpoint.sh
 !config/nginx.conf.tmpl
+!src

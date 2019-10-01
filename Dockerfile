@@ -1,8 +1,8 @@
-FROM nginx:1.17.2-alpine
+FROM openresty/openresty:1.15.8.2-alpine
 
-RUN rm -rf /etc/nginx/conf.d/*
+WORKDIR /usr/local/openresty/nginx/conf
 
-RUN apk add --no-cache --update apache2-utils
+RUN rm -f /etc/nginx/conf.d/*
 
 ENV SERVER_NAME example.com
 ENV PORT 80
@@ -12,5 +12,6 @@ ENV WORKER_PROCESSES auto
 
 COPY ./config/endpoint.sh /
 COPY ./config/nginx.conf.tmpl /
+COPY ./src /lua
 
 CMD sh /endpoint.sh

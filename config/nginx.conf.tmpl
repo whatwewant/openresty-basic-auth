@@ -1,4 +1,4 @@
-user nginx;
+# user nginx;
 worker_processes ##WORKER_PROCESSES##;
 
 error_log /dev/stdout info;
@@ -8,8 +8,12 @@ events {
   worker_connections 1024;
 }
 
+env BEARER_TOKEN;
+
 http {
   access_log /dev/stdout;
+
+  lua_code_cache on;
 
   gzip on;
   gzip_min_length 1k;
@@ -29,9 +33,9 @@ http {
     include /etc/nginx/conf.d/*.conf;
 
     location / {
+      access_by_lua_file /lua/access.lua;
+
       proxy_pass http://##PROXY_PASS_UPSTREAM##;
-      auth_basic "Restricted";
-      auth_basic_user_file /etc/nginx/.htpasswd;
 
       proxy_set_header X-Forwarded-Host $host;
       proxy_set_header Upgrade		$http_upgrade;

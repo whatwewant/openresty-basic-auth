@@ -1,15 +1,15 @@
-# Docker image of Nginx with Basic Auth
+# Docker image of openresty with Basic Auth
 
-[![Docker Stars](https://img.shields.io/docker/stars/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
-[![Docker Pulls](https://img.shields.io/docker/pulls/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
-[![Docker Automated](https://img.shields.io/docker/automated/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
-[![Docker Build](https://img.shields.io/docker/build/whatwewant/nginx-basic-auth.svg)](https://hub.docker.com/r/whatwewant/nginx-basic-auth)
+[![Docker Stars](https://img.shields.io/docker/stars/whatwewant/openresty-basic-auth.svg)](https://hub.docker.com/r/whatwewant/openresty-basic-auth)
+[![Docker Pulls](https://img.shields.io/docker/pulls/whatwewant/openresty-basic-auth.svg)](https://hub.docker.com/r/whatwewant/openresty-basic-auth)
+[![Docker Automated](https://img.shields.io/docker/automated/whatwewant/openresty-basic-auth.svg)](https://hub.docker.com/r/whatwewant/openresty-basic-auth)
+[![Docker Build](https://img.shields.io/docker/build/whatwewant/openresty-basic-auth.svg)](https://hub.docker.com/r/whatwewant/openresty-basic-auth)
 
 Simple HTTP Proxy with Basic Authentication
 
 ```
        w/ user:pass   +------------------------+      +-------------+
-User ---------------> | nginx-basic-auth-proxy | ---> | HTTP Server |
+User ---------------> | openresty-basic-auth   | ---> | HTTP Server |
                       +------------------------+      +-------------+
 ```
 
@@ -18,7 +18,7 @@ User ---------------> | nginx-basic-auth-proxy | ---> | HTTP Server |
 ```bash
 $ docker run \
     --rm \
-    --name nginx-basic-auth-proxy \
+    --name openresty-basic-auth \
     -p 8080:80 \
     -p 8090:8090 \
     -e BASIC_AUTH_USERNAME=username \
@@ -26,19 +26,17 @@ $ docker run \
     -e PROXY_PASS=https://www.google.com \
     -e SERVER_NAME=whatwewant.com \
     -e PORT=80 \
-    whatwewant/nginx-basic-auth
+    whatwewant/openresty-basic-auth
 ```
 
-Access to http://localhost:8080 , then browser asks you username and password.
+Access to http://localhost:8080 , then browser will shoud unauthorized if no authorization provided.
 
 You can also try complete HTTP-proxy example using Docker Compose.
 hello-world web application cannot be accessed without authentication.
 
 ```bash
 $ docker-compose up
-# http://localhost:8080/
-# - Username: username
-# - Password: password
+# curl http://localhost:8080 -H "Authorization: Bearer zero"
 ```
 
 ### Endpoint for monitoring
@@ -59,9 +57,8 @@ Reading: 0 Writing: 1 Waiting: 0
 
 |Key|Description|
 |---|---|
-|`BASIC_AUTH_USERNAME`|Basic auth username|
-|`BASIC_AUTH_PASSWORD`|Basic auth password|
-|`PROXY_PASS`|Proxy destination URL|
+|`BEARER_TOKEN`|Bearer Token|
+|`PROXY_PASS_UPSTREAM`|Proxy destination URL|
 
 ### Optional
 
