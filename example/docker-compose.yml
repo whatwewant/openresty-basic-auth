@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  auth:
+    # build:
+    #   context: ..
+    #   dockerfile: Dockerfile
+    image: whatwewant/nginx-basic-auth
+    ports:
+      - 8080:80
+      - 8090:8090
+    environment:
+      # PORT: 80
+      # SERVER_NAME: localhost
+      # CLIENT_MAX_BODY_SIZE: 1m 
+      # PROXY_READ_TIMEOUT: 60s
+      # WORKER_PROCESSES: auto
+      BASIC_AUTH_USERNAME: zero
+      BASIC_AUTH_PASSWORD: zero
+      PROXY_PASS_UPSTREAM: web:8080
+
+  web:
+    image: nginx:1.17.2-alpine
+    # ports:
+    #   - 8080:8080
+    volumes:
+      - ./web/conf.d:/etc/nginx/conf.d
+      - ./web/html:/var/www/html
