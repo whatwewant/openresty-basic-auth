@@ -3,9 +3,10 @@ version: '3.3'
 services:
   auth:
     restart: always
-    build:
-      context: ..
-      dockerfile: Dockerfile
+    # build:
+    #   context: ..
+    #   dockerfile: Dockerfile
+    image: whatwewant/openresty-basic-auth
     ports:
       - 8080:80
       - 8090:8090
